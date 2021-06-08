@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block the_body %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul>
+        {% for m in messages %}
+            <li>{{ m }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
+
+<form method="POST" action="/createReview"> 
+    <p>
+    <label for="liked">Did you like the game:</label>
+    <select id="liked" name="liked">
+      <option value= 0>No Opinion</option>
+      <option value= 1>No</option>
+      <option value= 2>Yes</option>
+    </select>
+    </p>
+
+    <p>
+    <label for="played">Did you play the game:</label>
+    <select id="played" name="played">
+        <option value= 0>No</option>
+        <option value= 1>Yes</option>
+    </select>
+    </p>
+
+    <p>
+    <label for="owned">Do you own the game:</label>
+    <select id="owned" name="owned">
+        <option value= 0>No</option>
+        <option value= 1>Yes</option>
+    </select>
+    </p>
+    
+    <p>
+    <label for="rating">How much did you enjoy the game:</label>
+    <select id="rating" name="rating">
+        <option value= 0>0</option>
+        <option value= 1>1</option>
+        <option value= 2>2</option>
+        <option value= 3>3</option>
+        <option value= 4>4</option>
+        <option value= 5>5</option>
+        <option value= 6>6</option>
+        <option value= 7>7</option>
+        <option value= 8>8</option>
+        <option value= 9>9</option>
+        <option value= 10>10</option>
+    </select>
+    </p>
+
+    <p>   
+    <label for="comment">Comment:</label>
+    <textarea id="comment" name="comment" rows="5" cols="80" maxlength="1024">
+    </textarea>
+    </p>
+
+    <input type="submit" value="Submit">
+</form>
+
+<br><br>
+
+<form action="/polygon">
+    <p>
+       To return to main page press the button below.
+    </p>
+    <input type="submit" value="Return">   
+</form>
+
+{% endblock %}

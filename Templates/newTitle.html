@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block the_body %}
+
+<h3>
+To add the {{the_name}} for {{the_platform}} to the list of titles, please fill out rest of the details.
+</h3>
+
+<div>
+    Add a new title.
+    <form method="POST" action="/createTitle">    
+
+        <p>
+        <label for="the_release_year">Release year of the game:</label>      
+        <select id="the_release_year" name="the_release_year">
+            {% for x in range(1900, 2021, 1) %}
+            <option value= {{x}}>{{x}}</option>
+            {% endfor %}
+        </select>
+        </p> 
+
+        <p>
+            <label for="the_genre">Genre of the game:</label>
+            <input type="text" name="the_genre" id="the_genre" required = "true">
+        </p>
+
+        <p>
+            <label for="the_studio">Studio that made the game:</label>
+            <input type="text" name="the_studio" id="the_studio" required = "true">
+        </p>
+
+        <input type="submit" value="Add The Game">
+    </form>
+</div>
+
+{% endblock %}

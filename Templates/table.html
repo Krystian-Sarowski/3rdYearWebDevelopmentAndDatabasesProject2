@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block the_body %}
+
+<style>
+    table, th, td 
+    {
+        background-color: rgb(161, 161, 161);
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    div
+    {
+        background-color: rgb(161, 161, 161);
+        height: 150px;
+        width: 300px;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    div.user
+    {
+        background-color: rgb(161, 161, 161);
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        height: 7%;
+        width: 15%;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+</style>
+
+<div class="user">
+You are logged in as {{the_user}}
+<br><br>
+{% if the_user == "Guest" %}
+<form action="/login">
+    <input type="submit" value="Log In/Register">
+</form>
+{% else %}
+<form action="/logOut">
+    <input type="submit" value="Log Out">
+</form>
+{% endif %}
+
+</div>
+
+<p>
+    <h3>
+        Welcome to the Polygon's reviews website. The best looking review website on the web.<br>
+        If you want to view the game's official page and  it's reviews just click on it's name.
+    </h3>
+</p>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul>
+        {% for m in messages %}
+            <li>{{ m }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
+
+<div>
+    Add a new title.
+    <form method="POST" action="/newTitle">    
+        <p>
+        <label for="the_title_name">Name of the game:</label>
+        <input type="text" name="the_title_name" id="the_title_name" required ="true">
+        </p>
+        
+        <p>
+        <label for="the_platform">Select the game's platform:</label>
+        <select id="the_platform" name="the_platform">
+            <option value= "PS Vita">PS Vita</option>
+            <option value= "Switch">Switch</option>
+            <option value= "PC">PC</option>
+            <option value= "PS2">PS2</option>
+            <option value= "Alex">Alex</option>
+            <option value= "PS4">PS4</option>
+            <option value= "Xbox 360">Xbox 360</option>
+            <option value= "3DS">3DS</option>
+            <option value= "Mobile">Mobile</option>
+            <option value= "Gameboy">Gameboy</option>
+            <option value= "Fridge">Fridge</option>
+            <option value= "Gamecube">Gamecude</option>
+        </select>
+        </p> 
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<br><br>
+
+<form method="POST" action="/polygon">    
+    <p>
+        <label for="the_order_by">Order by:</label>
+        <select id="the_order_by" name="the_order_by">
+            <option value= "titles.name">Name (default)</option>
+            <option value= "titles.platform">Platform</option>
+            <option value= "titles.release_year">Release Year</option>
+            <option value= "titles.genre">Genre</option>
+            <option value= "titles.studio">Studio</option>
+            <option value= "AVG(IF(reviews.title_id = titles.id, reviews.rating, null))">Rating</option>
+            <option value= "Sum(IF(reviews.title_id = titles.id and reviews.liked = 2, 1, 0))">Likes</option>
+            <option value= "Sum(IF(reviews.title_id = titles.id and reviews.liked = 1, 1, 0))">Dislikes</option>
+            <option value= "Sum(IF(reviews.title_id = titles.id, 1, 0))">Reviews</option>
+        </select>
+        </p> 
+    
+    <p>
+
+    <label for="the_order">Select the game's platform:</label>
+    <select id="the_order" name="the_order">
+        <option value= "asc">Ascending (default)</option>
+        <option value= "desc">Descending</option>
+    </select>
+    </p> 
+    <input type="submit" value="Reorder">
+</form>
+
+<br><br>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Platform</th>
+        <th>Release Year</th>
+        <th>Genre</th>
+        <th>Studio</th>
+        <th>Rating</th>
+        <th># Likes</th>
+        <th># Dislikes</th>
+        <th># Reviews</th>
+    </tr>
+    {% for row in the_data[:10] %}
+    <tr>
+        <td><a href="/game/{{ row[0] }}">{{ row[1] }}</a></td>
+        <td style="text-align:center">{{ row[2] }}</td>
+        <td style="text-align:center">{{ row[3] }}</td>
+        <td style="text-align:center">{{ row[4] }}</td>
+        <td style="text-align:center">{{ row[5] }}</td>
+        <td style="text-align:center">{{ row[6] }}</td>
+        <td style="text-align:center">{{ row[7] }}</td>
+        <td style="text-align:center">{{ row[8] }}</td>
+        <td style="text-align:center">{{ row[9] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

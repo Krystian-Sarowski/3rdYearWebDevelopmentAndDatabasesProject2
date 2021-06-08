@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block the_body %}
+
+<style>
+    div.login {
+      position: absolute;
+      top: 80px;
+      left: 450px;
+      height: 160px;
+      width: 250px;
+      background-color: rgb(48, 126, 136);
+    }
+
+    div.register {
+      position: absolute;
+      top: 80px;
+      left: 100px;
+      height: 160px;
+      width: 250px;
+      background-color: rgb(48, 126, 136);
+    }
+</style>
+
+<h3>Login/Register</h3>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul>
+        {% for m in messages %}
+            <li>{{ m }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
+
+<div class="register">
+    Register<br><br>
+    <form method="POST" action="/register">
+        User Name:<br>
+        <input type="text" name="the_user_name" required = "true">
+        <br>
+        Password:<br>
+        <input type="password" name="the_password" required = "true">
+        <br><br>
+        <input type="submit" value="Submit">   
+    </form>
+</div>
+    
+<br><br>
+    
+<div class="login">
+    Login<br><br>
+    <form method="POST" action="/login">
+        User Name:<br>
+        <input type="text" name="the_user_name" required = "true">
+        <br>
+        Password:<br>
+        <input type="password" name="the_password" required = "true">
+        <br><br>
+        <input type="submit" value="Submit">   
+    </form>
+</div>
+
+{% endblock %}

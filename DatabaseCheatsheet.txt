@@ -1,0 +1,5 @@
+MariaDB [(none)]> create database polygonreviewsDB;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> grant all on polygonreviewsDB.* to 'polygonuser' identified by 'polygonpassword';
+Query OK, 0 rows affected (0.156 sec)

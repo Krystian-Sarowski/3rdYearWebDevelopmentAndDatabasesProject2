@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+
+
+{% block the_body %}
+
+<style>
+
+    div
+    {
+        background-color: rgb(161, 161, 161);
+        height: 250px;
+        width: 550px;
+        border: 5px solid black;
+        border-collapse: collapse;
+    }
+
+    table
+    {
+        position: relative;
+        left: 15px;
+        top: 10px;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    
+    th, td 
+    {
+        background-color: rgb(201, 201, 201);
+        min-width: 100px;
+        max-width: 100px;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th.comment, td.comment
+    {
+        background-color: rgb(201, 201, 201);
+        min-width: 510px;
+        max-width: 510px;
+        border: 1px solid black;
+        border-collapse: collapse;
+        text-align: center
+    }
+
+    div.user
+    {
+        background-color: rgb(161, 161, 161);
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        height: 7%;
+        width: 15%;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+</style>
+
+<div class="user">
+You are logged in as {{the_user}}
+<br><br>
+{% if the_user == "Guest" %}
+<form action="/login">
+    <input type="submit" value="Log In/Register">
+</form>
+{% else %}
+<form action="/logOut">
+    <input type="submit" value="Log Out">
+</form>
+{% endif %}
+
+</div>
+
+<p>
+    <h3>Welcome to the Official page for {{ the_title_data[1] }} on {{ the_title_data[2] }}</h3>
+</p>
+
+<p>
+    Release Year: {{ the_title_data[3] }}
+</p>
+
+<p>
+    Genre:  {{ the_title_data[4] }}
+</p>
+
+<p>
+    Studio: {{ the_title_data[5] }}
+</p>
+
+<form action="/polygon">
+    <p>
+       To return to main page press the button below.
+    </p>
+    <input type="submit" value="Return">   
+</form>
+
+<form method="POST" action="/newReview">
+    <p>
+        If you want to make a review for this game press the button below.
+    </p>
+    <input type="submit" value="Make A Review">   
+</form>
+
+<p><font size="5">Reviews</font></p>
+
+{% for row in the_reviews_data %}
+<div>
+    <table>
+        <tr>
+            <th>User</th>
+            <th>Liked</th>
+            <th>Played</th>
+            <th>Owned</th>
+            <th>Rating</th>    
+        </tr>
+        
+        <tr>
+            <td style="text-align:center">{{ row[0] }}</td>
+            {% if row[1] == 0 %}
+                <td style="text-align:center">No Opinion</td>
+            {% elif row[1] == 1 %}
+                <td style="text-align:center">No</td>
+            {% else %}
+                <td style="text-align:center">Yes</td>
+            {% endif %}
+            
+            {% if row[2] == 0 %}
+                <td style="text-align:center">No</td>
+            {% else %}
+                <td style="text-align:center">Yes</td>
+            {% endif %}
+    
+            {% if row[3] == 0 %}
+                <td style="text-align:center">No</td>
+            {% else %}
+                <td style="text-align:center">Yes</td>
+            {% endif %}
+    
+            <td style="text-align:center">{{ row[4] }}</td>
+        </tr>
+    </table>
+    
+    <br><br>
+    
+    <table>
+        <tr>
+            <th class="comment">Comment</th>
+        </tr>
+    
+        <tr>
+            <td class="comment">{{ row[5] }}</td>
+        </tr>
+    </table>
+</div>
+
+<br><br>
+{% endfor %}
+
+{% endblock %}
